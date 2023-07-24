@@ -40,11 +40,10 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 
 #region PETICIONES API REST
@@ -76,7 +75,7 @@ app.MapGet("/empleado/lista", async (
     }
 });
 
-app.MapPost("/empleado", async (
+app.MapPost("/empleado/guardar", async (
     IEmpleadoService _empleadoService,
     Empleado nuevoEmpleado
     ) =>
@@ -85,7 +84,7 @@ app.MapPost("/empleado", async (
     return Results.Created($"/empleado/{nuevoEmpleado.IdEmpleado}", nuevoEmpleado);
 });
 
-app.MapPut("/empleado/{id}", async (
+app.MapPut("/empleado/actualizar/{id}", async (
     IEmpleadoService _empleadoService,
     Empleado actualizadoEmpleado,
     int id
@@ -110,7 +109,7 @@ app.MapPut("/empleado/{id}", async (
     return Results.Ok();
 });
 
-app.MapDelete("/empleado/{id}", async (
+app.MapDelete("/empleado/eliminar/{id}", async (
     IEmpleadoService _empleadoService,
     int id
     ) =>
